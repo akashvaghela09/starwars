@@ -115,8 +115,8 @@ function HomePage() {
         </div>
       {
         data && data.map((el, index) => 
-          active === index ? <h2 style={{background: "green", padding: "10px"}}>Name: {el.name}</h2>
-          : <ResultCard data={el}/>
+          active === index ? <ResultCard data={el} active={true} />
+          : <ResultCard data={el} active={false}/>
         )
       }
       </div>
