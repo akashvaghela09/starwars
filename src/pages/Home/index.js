@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './star-wars-logo.png';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,8 +30,6 @@ function HomePage() {
     axios.get(`https://swapi.dev/api/people/?search=${query}`)
       .then((res) => {
         let personList = [...res.data.results]
-        console.log(personList);
-        console.log(personList[active]);
         if(query.length === 1){
           dispatch(getSuccess([]))
         } else {
@@ -90,13 +88,23 @@ function HomePage() {
       }
     }
   }
+
+  // reset search bar
+  const resetField = () => {
+    setQuery("")
+    dispatch(getSuccess([]))
+  }
+
+  useEffect(() => {
+    resetField()
+  }, []);
   
   return (
     <div>
       <div className="logo">
         <img src={logo} alt="Star Wars Logo" />
       </div>
-      <div class="inputDiv">
+      <div className="inputDiv">
         <input 
           value={query} 
           onChange={handleQuery} 
@@ -104,21 +112,25 @@ function HomePage() {
           placeholder="Search by name" 
           onKeyUp={handleResult}
           />
-        <div class="inputRightDiv">
+        <div className="inputRightDiv">
           {loading && <Loader />}
           {
-            query.length === 0 && 
-            <div class="searchIconDiv">
-              <img class="searchIcon" src="/search.png" alt="search icon"/>
+            loading === false &&
+            <div className="searchIconDiv">
+              <img className="searchIcon" src="/search.png" alt="search icon"/>
             </div>
           }
+          { query.length > 1 && loading === false && 
+            <div className="closeIconDiv">
+              <img onClick={resetField} className="closeIcon" src="/close.webp" alt="close"/>
+            </div>}
         </div>
-      {
-        data && data.map((el, index) => 
-          active === index ? <ResultCard data={el} active={true} />
-          : <ResultCard data={el} active={false}/>
-        )
-      }
+        {
+          data && data.map((el, index) => 
+            active === index ? <ResultCard key={el.name} data={el} active={true} />
+            : <ResultCard key={el.name} data={el} active={false}/>
+          )
+        }
       </div>
      
     </div>

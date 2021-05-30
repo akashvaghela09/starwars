@@ -1,0 +1,31 @@
+.cardDiv, .lightCard {
+    margin: 0px;
+    padding: 10px 18px;
+    position: relative;
+}
+
+.lightCard {
+    background: #3c3f41;
+    margin:  0px 10px;
+    padding: 10px 10px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.cardDiv p, .lightCard p {
+    margin: 0px;
+    color: rgb(141, 141, 141);
+    font-size: 14px;
+}
+
+.name {
+    font-size: 18px;
+    color: rgb(201, 201, 201);
+}
+
+.gender {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    color: rgb(141, 141, 141);
+}

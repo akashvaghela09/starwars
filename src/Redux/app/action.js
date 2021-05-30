@@ -1,4 +1,4 @@
-import { GET_FAILURE, GET_REQUEST, GET_SUCCESS} from './actionType'
+import { GET_FAILURE, GET_REQUEST, GET_SUCCESS } from './actionType'
 
 const getRequest = () => {
     return {
@@ -22,5 +22,5 @@ const getFailure = () => {
 export { 
     getRequest,
     getSuccess,
-    getFailure 
+    getFailure
 }

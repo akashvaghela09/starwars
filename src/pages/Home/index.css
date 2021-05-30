@@ -45,4 +45,20 @@
 .searchIcon {
     width: 20px;
     margin: auto;
+    cursor: pointer;
+}
+
+.closeIconDiv {
+    position: absolute;
+    top: 2px;
+    right: 55px;
+    padding: 5px 10px;
+    padding-bottom: 0px;
+    margin-top: 7px;
+    border-right: 2px solid black;
+}
+
+.closeIcon {
+    width: 20px;
+    cursor: pointer;
 }
