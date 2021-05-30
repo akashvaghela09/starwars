@@ -23,7 +23,11 @@
 .inputDiv {
     background: #323435;
     width: fit-content;
-    height: fit-content;
+    max-height: 350px;
+    min-height: fit-content;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     position: relative;
     border-radius: 25px;
 }
@@ -61,4 +65,20 @@
 .closeIcon {
     width: 20px;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 500px) {
+    .search-input {
+        width: 80vw;
+        padding: 16px 24px;
+        border-radius: 25px;
+        border: 0;
+        outline: 0;
+    
+        font-size: 16px;
+    
+        background: #2d2f30;
+        color: #f2f2f2;
+    }
+    
 }

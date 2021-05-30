@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from './star-wars-logo.png';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ function HomePage() {
   const loading = useSelector(state => state.app.isLoading)
   const data = useSelector(state => state.app.data)
   const [active, setActive] = useState(0);
+  const inputRef = useRef()
 
   // handle search query
   const handleQuery = (event) => {
@@ -33,7 +34,7 @@ function HomePage() {
         if(query.length === 1){
           dispatch(getSuccess([]))
         } else {
-          dispatch(getSuccess(personList))
+          dispatch(getSuccess(personList.splice(0, 5)))
         }
       })
   }
@@ -95,12 +96,14 @@ function HomePage() {
     dispatch(getSuccess([]))
   }
 
+  // reset everithing and focus on input
   useEffect(() => {
     resetField()
+    inputRef.current.focus()
   }, []);
   
   return (
-    <div>
+    <div style={{marginTop: "100px"}}>
       <div className="logo">
         <img src={logo} alt="Star Wars Logo" />
       </div>
@@ -111,6 +114,7 @@ function HomePage() {
           className="search-input" 
           placeholder="Search by name" 
           onKeyUp={handleResult}
+          ref={inputRef}
           />
         <div className="inputRightDiv">
           {loading && <Loader />}
@@ -120,7 +124,7 @@ function HomePage() {
               <img className="searchIcon" src="/search.png" alt="search icon"/>
             </div>
           }
-          { query.length > 1 && loading === false && 
+          { query.length >= 1 && loading === false && 
             <div className="closeIconDiv">
               <img onClick={resetField} className="closeIcon" src="/close.webp" alt="close"/>
             </div>}

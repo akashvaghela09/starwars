@@ -1,10 +1,12 @@
 .app {
     min-height: 100vh;
-    background: #4d4d4d;
-    /* background: #110b0b; */
-
+    background: #110b0b;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
+
+html {
+    scroll-behavior: smooth;
+  }

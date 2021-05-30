@@ -27,12 +27,11 @@ function Person() {
       setResult(res.data.results[0])
     })
 
-    window.addEventListener("keypress", handleBack)
-    // handleBack()
+    window.addEventListener("keyup", handleBack)
   }, [])
 
   return (
-    <div className="person">
+    <div className="person" style={{marginTop: "100px"}}>
       {
         result && 
         <div className="personCard">
