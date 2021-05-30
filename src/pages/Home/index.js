@@ -4,14 +4,19 @@ import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRequest, getSuccess } from '../../Redux/app/action';
 import axios from "axios"
+import { useHistory } from 'react-router';
+import { Loader } from '../../components/Loader';
+import { ResultCard } from '../../components/ResultCard';
 
 function HomePage() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [query, setQuery] = useState("")
   const loading = useSelector(state => state.app.isLoading)
   const data = useSelector(state => state.app.data)
   const [active, setActive] = useState(0);
 
+  // handle search query
   const handleQuery = (event) => {
     dispatch(getRequest())
     let string = event.target.value
@@ -20,6 +25,7 @@ function HomePage() {
     debouncedReq()
   }
 
+  // get data from API
   const getData = () => {
     axios.get(`https://swapi.dev/api/people/?search=${query}`)
       .then((res) => {
@@ -49,10 +55,11 @@ function HomePage() {
 
   const debouncedReq = debounce(getData, 2000)
 
+  // for handling Key Navigation
   const handleResult = (e) => {
-
     switch (e.keyCode) {
       case 40: {
+        // on down arrow
         if (active >= data.length - 1) {
           setActive(0);
         } else if (active < data.length - 1) {
@@ -61,6 +68,7 @@ function HomePage() {
         break;
       }
       case 38: {
+        // on up arrow
         if (active === 1) {
           setActive(0);
         } else if (active <= 0) {
@@ -71,8 +79,10 @@ function HomePage() {
         break;
       }
       case 13: {
-        // onEnter
-        alert(data[active].name);
+        // on Enter
+        if(data.length > 0){
+          return history.push(`/person/${data[active].name.split(" ").join("_")}`) 
+        }
         break;
       }
       default: {
@@ -80,25 +90,36 @@ function HomePage() {
       }
     }
   }
+  
   return (
     <div>
-      {loading && <h2>Loading</h2>}
       <div className="logo">
         <img src={logo} alt="Star Wars Logo" />
       </div>
-      <input 
-        value={query} 
-        onChange={handleQuery} 
-        className="search-input" 
-        placeholder="Search by name" 
-        onKeyUp={handleResult}
-      />
+      <div class="inputDiv">
+        <input 
+          value={query} 
+          onChange={handleQuery} 
+          className="search-input" 
+          placeholder="Search by name" 
+          onKeyUp={handleResult}
+          />
+        <div class="inputRightDiv">
+          {loading && <Loader />}
+          {
+            query.length === 0 && 
+            <div class="searchIconDiv">
+              <img class="searchIcon" src="/search.png" alt="search icon"/>
+            </div>
+          }
+        </div>
       {
         data && data.map((el, index) => 
-          active === index ? <h2 style={{background: "green", padding: "10px", margin: "10px"}}>Name: {el.name}</h2>
-          : <h2 style={{background: "white", padding: "10px", margin: "10px"}}>Name: {el.name}</h2>
+          active === index ? <h2 style={{background: "green", padding: "10px"}}>Name: {el.name}</h2>
+          : <ResultCard data={el}/>
         )
       }
+      </div>
      
     </div>
   );

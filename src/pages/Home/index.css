@@ -19,3 +19,31 @@
 .logo img {
     width: 200px;
 }
+
+.inputDiv {
+    background: #2d2f30;
+    border: 1px solid white;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    border-radius: 25px;
+}
+
+.inputRightDiv {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.searchIconDiv {
+    background-color: #ecd014;
+    padding: 8px 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.searchIcon {
+    width: 20px;
+    margin: auto;
+}
